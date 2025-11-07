@@ -5,9 +5,10 @@ import com.mafloresm.springcloud.msvc.pokemon.dto.PokemonResponse;
 import com.mafloresm.springcloud.msvc.pokemon.entities.Pokemon;
 import com.mafloresm.springcloud.msvc.pokemon.entities.TypePokemon;
 import com.mafloresm.springcloud.msvc.pokemon.models.PokemonModel;
-import com.mafloresm.springcloud.msvc.pokemon.models.PokemonTypeModel;
+import com.mafloresm.springcloud.msvc.pokemon.models.TypePokemonModel;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,27 +22,27 @@ public class PokemonMapper {
         return  pokemon;
     }
 
-    public PokemonResponse toResponse(Pokemon pokemon){
-        PokemonResponse response = new PokemonResponse();
-        response.setId(pokemon.getIdPokemon());
-        response.setName(pokemon.getName());
-        response.setTypes(pokemon.getTypes().stream().map(TypePokemon::getName).collect(Collectors.toSet()));
-        return response;
+    public PokemonModel toModel(Pokemon pokemon){
+        PokemonModel pokemonModel = new PokemonModel();
+        pokemonModel.setIdPokemon(pokemon.getIdPokemon());
+        pokemonModel.setName(pokemon.getName());
+        pokemonModel.setTypePokemon(pokemon.getTypes().stream().map(this::entityTotypePokemonModel).collect(Collectors.toSet()));
+        return pokemonModel;
     }
-//    public PokemonTypeModel pokemonTpyeEntityToModel(TypePokemon entity){
-//        PokemonTypeModel model = new PokemonTypeModel();
-//        model.setId(entity.getId());
-//        model.setNombre(entity.getType());
-//        return  model;
-//    }
+
+    public TypePokemonModel entityListToTypePokemonModelList(TypePokemon typePokemonEntity){
+        TypePokemonModel model = new TypePokemonModel();
+        model.setTypePokemonId(typePokemonEntity.getId());
+        model.setName(typePokemonEntity.getName());
+        return  model;
+    }
 //
-//    public PokemonModel entityToPokemonModel(Pokemon entity){
-//        PokemonModel pokemonModel = new PokemonModel();
-//        pokemonModel.setId(entity.getIdPokemon());
-//        pokemonModel.setNombre(entity.getName());
-//        pokemonModel.setTypePokemon(pokemonTpyeEntityToModel(entity.getType()));
-//        return  pokemonModel;
-//    }
+    public TypePokemonModel entityTotypePokemonModel(TypePokemon typePokemon){
+        TypePokemonModel model = new TypePokemonModel();
+        model.setName(typePokemon.getName());
+        model.setTypePokemonId(typePokemon.getId());
+        return model;
+    }
 
 
 }
