@@ -62,7 +62,7 @@ public class PokemonServiceImpl implements PokemonService{
         Optional<Pokemon> pokemon = pokemonRepository.findById(id);
         PokemonModel pokemonModel = pokemon.map(pokemonMapper::toModel).orElseThrow(()->
                 new PokemonException("Pokemon no existe", HttpStatus.NOT_FOUND.value()));
-        return  new PokemonResponse(List.of(pokemonModel),HttpStatus.OK, "Pokemon Found");
+        return  new PokemonResponse(List.of(pokemonModel),HttpStatus.FOUND, "Pokemon Found");
     }
 
     @Override
@@ -72,30 +72,30 @@ public class PokemonServiceImpl implements PokemonService{
         PokemonModel pokemonModel = pokemon.map(pokemonMapper::toModel).
                 orElseThrow(()->  new PokemonException("El Pokemon no existe", HttpStatus.NOT_FOUND.value()));
 
-        return new PokemonResponse(List.of(pokemonModel),HttpStatus.OK,"Pokemon Found");
+        return new PokemonResponse(List.of(pokemonModel),HttpStatus.FOUND,"Pokemon Found");
     }
 
     @Override
-    public Optional<PokemonResponse> updatePokemon(PokemonRequest pokemonRequest) {
+    public PokemonResponse updatePokemon(PokemonRequest pokemonRequest) {
+        final Set<TypePokemon>typePokemons= new HashSet<>(typePokemonRepository.findAllById(pokemonRequest.getTypesId()));
 //        TypePokemon type = typePokemonRepository.findById(pokemonRequest.getTypePokemon().getId())
 //                .orElseThrow(() -> new PokemonException("Tipo de pokemon no existe", HttpStatus.NOT_FOUND.value()));
-//
-//        Pokemon existing = pokemonRepository.findById(pokemonRequest.getId())
-//                .orElseThrow(() -> new PokemonException("Pokemon no encontrado",  HttpStatus.NOT_FOUND.value()));
-//        existing.setName(pokemonRequest.getNombre());
-//        existing.setType(type);
-//
-//        Pokemon saved = pokemonRepository.save(existing);
-//        return Optional.of(pokemonMapper.entityToResponse(saved));
-        return null;
+
+        final Pokemon existing = pokemonRepository.findById(pokemonRequest.getId())
+                .orElseThrow(() -> new PokemonException("Pokemon no encontrado",  HttpStatus.NOT_FOUND.value()));
+        existing.setName(pokemonRequest.getName());
+        existing.setTypes(typePokemons);
+        final List<PokemonModel> pokemonModels = List.of(pokemonMapper.toModel(pokemonRepository.save(existing)));
+        return new PokemonResponse(pokemonModels,HttpStatus.OK,"Pokemon Modified");
     }
 
     @Override
-    public void deletePokemon(Long id) {
+    public PokemonResponse deletePokemon(Long id) {
 
         Pokemon existing = pokemonRepository.findById(id).
                 orElseThrow(()->new PokemonException("Pokemon no encontrado", HttpStatus.NOT_FOUND.value()));
         existing.setActive(false);
         pokemonRepository.save(existing);
+        return new PokemonResponse(List.of(),HttpStatus.OK,"Pokemon Deleted");
     }
 }
