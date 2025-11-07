@@ -2,44 +2,37 @@ package com.mafloresm.springcloud.msvc.pokemon.models;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Set;
+
 @Component
 public class PokemonModel {
 
-    private Long id;
-    private String nombre;
-    private PokemonTypeModel pokemonTypeModel;
+    private Long idPokemon;
+    private String name;
+    private Set<TypePokemonModel> typePokemon;
 
-
-    public PokemonModel() {
+    public Long getIdPokemon() {
+        return idPokemon;
     }
 
-    public PokemonModel(Long id, String nombre, PokemonTypeModel pokemonTypeModel) {
-        this.id = id;
-        this.nombre = nombre;
-        this.pokemonTypeModel = pokemonTypeModel;
+    public void setIdPokemon(Long idPokemon) {
+        this.idPokemon = idPokemon;
     }
 
-    public Long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Set<TypePokemonModel> getTypePokemon() {
+        return typePokemon;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public PokemonTypeModel getTypePokemon() {
-        return pokemonTypeModel;
-    }
-
-    public void setTypePokemon(PokemonTypeModel pokemonTypeModel) {
-        this.pokemonTypeModel = pokemonTypeModel;
+    public void setTypePokemon(Set<TypePokemonModel> typePokemon) {
+        this.typePokemon = typePokemon;
     }
 }

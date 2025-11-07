@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -23,7 +26,7 @@ public class ControllerAdvice {
         e.getBindingResult().getFieldErrors().forEach(fieldError ->
                 errors.put(fieldError.getField(), fieldError.getDefaultMessage())
         );
-        ErrorDTO error = new ErrorDTO("Error de Validacion 1",errors,400,LocalDateTime.now());
+        ErrorDTO error = new ErrorDTO("Error de Validacion",errors,400,LocalDateTime.now());
         return ResponseEntity.badRequest().body(error);
     }
 
@@ -33,7 +36,7 @@ public class ControllerAdvice {
         Map<String, String > details = new HashMap<>();
         details.put("Error", e.getLocalizedMessage());
         ErrorDTO error = new ErrorDTO(
-                "Error de Validacion 2",
+                "Error de Validacion",
                 details,
                 HttpStatus.BAD_REQUEST.value(),
                 LocalDateTime.now()) ;
@@ -51,4 +54,16 @@ public class ControllerAdvice {
                 LocalDateTime.now()) ;
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorDTO> handleMethodArgumentTypeMismatchException(NoResourceFoundException e) {
+        ErrorDTO errorDTO = new ErrorDTO(
+                "Error",
+                Map.of("Error", e.getMessage()),
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now());
+
+        return ResponseEntity.status(errorDTO.getHttpStatus()).body(errorDTO);
+    }
+
+    
 }

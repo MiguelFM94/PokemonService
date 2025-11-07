@@ -1,40 +1,49 @@
 package com.mafloresm.springcloud.msvc.pokemon.dto;
 
-import com.mafloresm.springcloud.msvc.pokemon.models.PokemonTypeModel;
-import lombok.Data;
+import com.mafloresm.springcloud.msvc.pokemon.models.PokemonModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import java.util.List;
 
-import java.util.Set;
 
 @Component
 
 public class PokemonResponse {
 
-    private Long id;
-    private String name;
-    private Set<String> types; // solo los nombres de los tipos
+    private List<PokemonModel> data;
+    private HttpStatus status;
+    private String message;
 
-    public Long getId() {
-        return id;
+    public PokemonResponse() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public PokemonResponse(List<PokemonModel> data, HttpStatus status, String message) {
+        this.data = data;
+        this.status = status;
+        this.message = message;
     }
 
-    public String getName() {
-        return name;
+    public List<PokemonModel> getData() {
+        return data;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setData(List<PokemonModel> data) {
+        this.data = data;
     }
 
-    public Set<String> getTypes() {
-        return types;
+    public HttpStatus getStatus() {
+        return status;
     }
 
-    public void setTypes(Set<String> types) {
-        this.types = types;
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

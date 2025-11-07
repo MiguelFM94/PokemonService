@@ -17,6 +17,7 @@ public class PokemonRequest {
     @NotBlank(message = "El nombre del pokemon no debe estar vacío")
     private String name;
 
+   @NotNull(message = "El tipo de pokemon es requerido")
     private Set<Long> typesId;
 
     public PokemonRequest() {

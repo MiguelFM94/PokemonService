@@ -11,10 +11,10 @@ import java.util.Optional;
 
 public interface PokemonService {
 
-    List<PokemonModel> findAll();
-    PokemonModel getById(Long id);
-    PokemonModel getByName(String nombre);
+    PokemonResponse findAll();
+    PokemonResponse getById(Long id);
+    PokemonResponse getByName(String nombre);
     PokemonResponse savePokemon(PokemonRequest pokemonRequest);
-    Optional<PokemonResponse> updatePokemon(PokemonRequest pokemonRequest);
-    void deletePokemon(Long id);
+    PokemonResponse updatePokemon(PokemonRequest pokemonRequest);
+    PokemonResponse deletePokemon(Long id);
 }
