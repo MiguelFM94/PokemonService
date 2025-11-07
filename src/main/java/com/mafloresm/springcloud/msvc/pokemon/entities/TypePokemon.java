@@ -1,21 +1,25 @@
 package com.mafloresm.springcloud.msvc.pokemon.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class TypePokemon {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "type_id")
     private Long id;
 
-    @NotBlank
-    private String type;
+    @NotBlank(message = "El nombre del tipo no debe estar vacío")
+    private String name;
+
+    @ManyToMany(mappedBy = "types")
+    private Set<Pokemon> pokemon = new HashSet<>();
 
     public Long getId() { 
         return id;
@@ -25,11 +29,19 @@ public class TypePokemon {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public Set<Pokemon> getPokemon() {
+        return pokemon;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setPokemon(Set<Pokemon> pokemon) {
+        this.pokemon = pokemon;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

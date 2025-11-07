@@ -3,18 +3,24 @@ package com.mafloresm.springcloud.msvc.pokemon.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
+@Data
 public class PokemonRequest {
 
     private Long id;
-    @NotBlank(message = "El nombre no debe estar vacio")
-    private String nombre;
+    @NotBlank(message = "El nombre del pokemon no debe estar vacío")
+    private String name;
 
-    @Valid
-    @NotNull(message = "Debe indicar el tipo de Pokémon")
-    private TypePokemonRequest typePokemon;
+    private Set<Long> typesId;
+
+    public PokemonRequest() {
+    }
 
     public Long getId() {
         return id;
@@ -24,19 +30,19 @@ public class PokemonRequest {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public TypePokemonRequest getTypePokemon() {
-        return typePokemon;
+    public Set<Long> getTypesId() {
+        return typesId;
     }
 
-    public void setTypePokemon(TypePokemonRequest typePokemon) {
-        this.typePokemon = typePokemon;
+    public void setTypesId(Set<Long> typesId) {
+        this.typesId = typesId;
     }
 }

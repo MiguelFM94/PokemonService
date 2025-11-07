@@ -14,9 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -34,70 +33,71 @@ public class PokemonServiceImpl implements PokemonService{
     @Override
     @Transactional(readOnly = true)
     public List<PokemonModel> findAll() {
-        List<Pokemon> pokemonList = pokemonRepository.findAll();
-        List<PokemonModel>pokemonModelList = new ArrayList<>();
-        pokemonList.forEach(pokemon -> {
-           pokemonModelList.add(new PokemonModel(
-                    pokemon.getIdPokemon(),
-                    pokemon.getName(),
-                    new PokemonTypeModel(pokemon.getType().getId(),pokemon.getType().getType()))
-            );
-        });
-    return pokemonModelList;
+//        List<Pokemon> pokemonList = pokemonRepository.findAll();
+//        List<PokemonModel>pokemonModelList = new ArrayList<>();
+//        pokemonList.forEach(pokemon -> {
+//           pokemonModelList.add(new PokemonModel(
+//                    pokemon.getIdPokemon(),
+//                    pokemon.getName(),
+//                    new PokemonTypeModel(pokemon.getType().getId(),pokemon.getType().getType()))
+//            );
+//        });
+//    return pokemonModelList;
+        return null;
     }
 
 
     @Override
     @Transactional(readOnly = true)
     public PokemonModel getById(Long id) {
-        Optional<Pokemon> pokemon = pokemonRepository.findById(id);
-        PokemonModel pokemonModel = new PokemonModel();
-        pokemonModel = pokemon.map(pokemonMapper::entityToPokemonModel).orElseThrow(()->
-         new PokemonException("Pokemon no existe", HttpStatus.NOT_FOUND.value()));
-        return  pokemonModel;
+//        Optional<Pokemon> pokemon = pokemonRepository.findById(id);
+//        PokemonModel pokemonModel = new PokemonModel();
+//        pokemonModel = pokemon.map(pokemonMapper::entityToPokemonModel).orElseThrow(()->
+//         new PokemonException("Pokemon no existe", HttpStatus.NOT_FOUND.value()));
+//        return  pokemonModel;
+        return null;
     }
 
 
 
     @Override
     @Transactional
-    public Optional<PokemonResponse> savePokemon(PokemonRequest pokemonRequest) {
-        Pokemon pokemon = new Pokemon();
-        Optional<PokemonResponse> response;
-        Optional<TypePokemon> optionalTypePokemon= typePokemonRepository.findById(pokemonRequest.getTypePokemon().getId());
-        if(optionalTypePokemon.isPresent()){
-            pokemon = pokemonMapper.toEntity(pokemonRequest, optionalTypePokemon.get());
-        }else{
-            throw new PokemonException("Tipo de pokemon no existe", HttpStatus.NOT_FOUND.value());
-        }
-        response = Optional.ofNullable(pokemonMapper.entityToResponse(pokemonRepository.save(pokemon)));
+    public PokemonResponse savePokemon(PokemonRequest pokemonRequest) {
 
-        return response;
+        System.out.println("pokemonRequest = " + pokemonRequest);
+        pokemonRequest.getTypesId().forEach(e-> System.out.println("HOLAAAAA: "+ e));
+        Set<TypePokemon> types = new HashSet<>(typePokemonRepository.findAllById(pokemonRequest.getTypesId()));
+        System.out.println("PokemonServiceImpl.savePokemon");
+        types.forEach(e-> System.out.println(e.getName()));
+        Pokemon pokemonToSave = pokemonMapper.toEntity(pokemonRequest,types);
+        //        Pokemon pokemon = new Pokemon();
+        return pokemonMapper.toResponse(pokemonRepository.save(pokemonToSave));
     }
 
     @Override
     @Transactional(readOnly = true)
     public PokemonModel getByName(String nombre) {
-        Optional<Pokemon> pokemon = Optional.ofNullable(pokemonRepository.findByNameContainingIgnoreCase(nombre));
-        PokemonModel pokemonModel = pokemon.map(pokemonMapper::entityToPokemonModel).
-                orElseThrow(()->  new PokemonException("El Pokemon no existe", HttpStatus.NOT_FOUND.value()));
-
-        return pokemonModel;
+//        Optional<Pokemon> pokemon = Optional.ofNullable(pokemonRepository.findByNameContainingIgnoreCase(nombre));
+//        PokemonModel pokemonModel = pokemon.map(pokemonMapper::entityToPokemonModel).
+//                orElseThrow(()->  new PokemonException("El Pokemon no existe", HttpStatus.NOT_FOUND.value()));
+//
+//        return pokemonModel;
+        return null;
     }
 
     @Override
     public Optional<PokemonResponse> updatePokemon(PokemonRequest pokemonRequest) {
-        TypePokemon type = typePokemonRepository.findById(pokemonRequest.getTypePokemon().getId())
-                .orElseThrow(() -> new PokemonException("Tipo de pokemon no existe", HttpStatus.NOT_FOUND.value()));
-
-        Pokemon existing = pokemonRepository.findById(pokemonRequest.getId())
-                .orElseThrow(() -> new PokemonException("Pokemon no encontrado",  HttpStatus.NOT_FOUND.value()));
-        existing.setName(pokemonRequest.getNombre());
-        existing.setType(type);
-
-        Pokemon saved = pokemonRepository.save(existing);
-        return Optional.of(pokemonMapper.entityToResponse(saved));
-
+//        TypePokemon type = typePokemonRepository.findById(pokemonRequest.getTypePokemon().getId())
+//                .orElseThrow(() -> new PokemonException("Tipo de pokemon no existe", HttpStatus.NOT_FOUND.value()));
+//
+//        Pokemon existing = pokemonRepository.findById(pokemonRequest.getId())
+//                .orElseThrow(() -> new PokemonException("Pokemon no encontrado",  HttpStatus.NOT_FOUND.value()));
+//        existing.setName(pokemonRequest.getNombre());
+//        existing.setType(type);
+//
+//        Pokemon saved = pokemonRepository.save(existing);
+//        return Optional.of(pokemonMapper.entityToResponse(saved));
+        return null;
     }
 
     @Override

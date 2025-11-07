@@ -2,8 +2,10 @@ package com.mafloresm.springcloud.msvc.pokemon.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.Where;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -15,12 +17,20 @@ public class Pokemon {
     @Column(name = "pokemon_id")
     private Long idPokemon;
 
-    @NotBlank
+    @NotBlank(message = "El nombre del pokemon no debe estar vacío")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "type_pokemon_id") // la columna FK en la tabla 'pokemon'
-    private TypePokemon type;
+//    @ManyToOne
+//    @JoinColumn(name = "type_pokemon_id") // la columna FK en la tabla 'pokemon'
+//    private TypePokemon type;
+
+    @ManyToMany
+    @JoinTable(
+            name="pokemon_types",
+            joinColumns= @JoinColumn(name="pokemon_id"),
+            inverseJoinColumns =@JoinColumn(name="type_id")
+    )
+    private Set<TypePokemon> types = new HashSet<>();
 
     private boolean active = true;
 
@@ -40,12 +50,12 @@ public class Pokemon {
         this.name = name;
     }
 
-    public TypePokemon getType() {
-        return type;
+    public Set<TypePokemon> getTypes() {
+        return types;
     }
 
-    public void setType(TypePokemon type) {
-        this.type = type;
+    public void setTypes(Set<TypePokemon> types) {
+        this.types = types;
     }
 
     public boolean isActive() {

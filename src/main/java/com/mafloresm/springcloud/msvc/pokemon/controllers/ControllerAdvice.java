@@ -23,7 +23,7 @@ public class ControllerAdvice {
         e.getBindingResult().getFieldErrors().forEach(fieldError ->
                 errors.put(fieldError.getField(), fieldError.getDefaultMessage())
         );
-        ErrorDTO error = new ErrorDTO("Error de Validacion",errors,400,LocalDateTime.now());
+        ErrorDTO error = new ErrorDTO("Error de Validacion 1",errors,400,LocalDateTime.now());
         return ResponseEntity.badRequest().body(error);
     }
 
@@ -33,7 +33,7 @@ public class ControllerAdvice {
         Map<String, String > details = new HashMap<>();
         details.put("Error", e.getLocalizedMessage());
         ErrorDTO error = new ErrorDTO(
-                "Error de Validacion",
+                "Error de Validacion 2",
                 details,
                 HttpStatus.BAD_REQUEST.value(),
                 LocalDateTime.now()) ;

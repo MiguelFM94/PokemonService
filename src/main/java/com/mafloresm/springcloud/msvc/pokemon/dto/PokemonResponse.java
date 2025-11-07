@@ -4,13 +4,15 @@ import com.mafloresm.springcloud.msvc.pokemon.models.PokemonTypeModel;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
-@Data
+
 public class PokemonResponse {
 
     private Long id;
-    private String nombre;
-    private PokemonTypeModel typePokemon;
+    private String name;
+    private Set<String> types; // solo los nombres de los tipos
 
     public Long getId() {
         return id;
@@ -20,19 +22,19 @@ public class PokemonResponse {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public PokemonTypeModel getTypePokemon() {
-        return typePokemon;
+    public Set<String> getTypes() {
+        return types;
     }
 
-    public void setTypePokemon(PokemonTypeModel typePokemon) {
-        this.typePokemon = typePokemon;
+    public void setTypes(Set<String> types) {
+        this.types = types;
     }
 }

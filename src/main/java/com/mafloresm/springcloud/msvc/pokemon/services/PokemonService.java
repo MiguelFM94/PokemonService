@@ -14,7 +14,7 @@ public interface PokemonService {
     List<PokemonModel> findAll();
     PokemonModel getById(Long id);
     PokemonModel getByName(String nombre);
-    Optional<PokemonResponse> savePokemon(PokemonRequest pokemonRequest);
+    PokemonResponse savePokemon(PokemonRequest pokemonRequest);
     Optional<PokemonResponse> updatePokemon(PokemonRequest pokemonRequest);
     void deletePokemon(Long id);
 }

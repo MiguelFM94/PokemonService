@@ -1,6 +1,5 @@
 package com.mafloresm.springcloud.msvc.pokemon.models;
 
-import com.mafloresm.springcloud.msvc.pokemon.dto.TypePokemonRequest;
 import org.springframework.stereotype.Component;
 
 @Component

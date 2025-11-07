@@ -28,7 +28,7 @@ public class PokemonController {
     }
 
     @PostMapping("api/pokemon/")
-    public ResponseEntity<?> savePokemon(@Valid  @RequestBody PokemonRequest pokeRequest){
+    public ResponseEntity<?> savePokemon(@RequestBody PokemonRequest pokeRequest){
 
         System.out.println("PokemonController.savePokemon");
         return ResponseEntity.status(HttpStatus.CREATED).body(pokemonService.savePokemon(pokeRequest));
