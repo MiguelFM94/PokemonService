@@ -1,0 +1,14 @@
+package com.mafloresm.springcloud.msvc.pokemon.repositories;
+
+import com.mafloresm.springcloud.msvc.pokemon.entities.Pokemon;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+
+public interface PokemonRepository extends JpaRepository<Pokemon,Long> {
+
+
+    Pokemon findByName(String name);
+    Pokemon findByNameContainingIgnoreCase(String name);
+
+}
