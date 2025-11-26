@@ -1,7 +1,6 @@
 package com.mafloresm.springcloud.msvc.pokemon.mapper;
 
 import com.mafloresm.springcloud.msvc.pokemon.dto.PokemonRequest;
-import com.mafloresm.springcloud.msvc.pokemon.dto.PokemonResponse;
 import com.mafloresm.springcloud.msvc.pokemon.entities.Pokemon;
 import com.mafloresm.springcloud.msvc.pokemon.entities.TypePokemon;
 import com.mafloresm.springcloud.msvc.pokemon.models.PokemonModel;

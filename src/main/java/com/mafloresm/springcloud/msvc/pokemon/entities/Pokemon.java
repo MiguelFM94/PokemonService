@@ -20,10 +20,6 @@ public class Pokemon {
     @NotBlank(message = "El nombre del pokemon no debe estar vacío")
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "type_pokemon_id") // la columna FK en la tabla 'pokemon'
-//    private TypePokemon type;
-
     @ManyToMany
     @JoinTable(
             name="pokemon_types",

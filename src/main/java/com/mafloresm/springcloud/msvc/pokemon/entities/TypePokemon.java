@@ -3,7 +3,6 @@ package com.mafloresm.springcloud.msvc.pokemon.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-
 import java.util.HashSet;
 import java.util.Set;
 

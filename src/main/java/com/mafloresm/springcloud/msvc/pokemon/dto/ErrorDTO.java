@@ -1,19 +1,18 @@
 package com.mafloresm.springcloud.msvc.pokemon.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import org.springframework.http.HttpStatus;
-
+import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-
+@Component
 public class ErrorDTO{
     private String error;
     private Map<String, String> details;
     private int httpStatus;
     private LocalDateTime date;
 
+    public ErrorDTO() {
+    }
 
     public ErrorDTO(String error, Map<String, String> details, int httpStatus, LocalDateTime date) {
         this.error = error;
