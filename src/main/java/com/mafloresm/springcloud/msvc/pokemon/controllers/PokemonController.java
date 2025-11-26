@@ -1,9 +1,9 @@
 package com.mafloresm.springcloud.msvc.pokemon.controllers;
+
 import com.mafloresm.springcloud.msvc.pokemon.dto.PokemonRequest;
 import com.mafloresm.springcloud.msvc.pokemon.dto.PokemonResponse;
-import com.mafloresm.springcloud.msvc.pokemon.services.PokemonServiceImpl;
+import com.mafloresm.springcloud.msvc.pokemon.services.PokemonService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping()
 public class PokemonController {
     @Autowired
-    private PokemonServiceImpl pokemonService;
+    private PokemonService pokemonService;
 
     @GetMapping("api/pokemon/")
     public ResponseEntity<?> getAllpokemon(){

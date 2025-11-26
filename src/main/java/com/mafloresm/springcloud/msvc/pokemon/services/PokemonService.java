@@ -2,13 +2,10 @@ package com.mafloresm.springcloud.msvc.pokemon.services;
 
 import com.mafloresm.springcloud.msvc.pokemon.dto.PokemonRequest;
 import com.mafloresm.springcloud.msvc.pokemon.dto.PokemonResponse;
-import com.mafloresm.springcloud.msvc.pokemon.entities.Pokemon;
-import com.mafloresm.springcloud.msvc.pokemon.models.PokemonModel;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
 
+@Repository
 public interface PokemonService {
 
     PokemonResponse findAll();
